@@ -1,39 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Expenses from "./components/Expenses/Expenses";
 import NewExpense from "./components/NewExpense/NewExpense";
+import ExpensesChart from "./components/Expenses/ExpensesChart";
+
+const DUMMY_EXPENSES = [
+  {
+    id: "e1",
+    title: "Toilet Paper",
+    amount: 94.12,
+    date: new Date(2020, 7, 14),
+  },
+  { id: "e2", title: "New TV", amount: 799.49, date: new Date(2021, 2, 12) },
+  {
+    id: "e3",
+    title: "Car Insurance",
+    amount: 294.67,
+    date: new Date(2021, 2, 28),
+  },
+  {
+    id: "e4",
+    title: "New Desk (Wooden)",
+    amount: 450,
+    date: new Date(2021, 5, 12),
+  },
+];
 
 function App() {
-  const expenses = [
-    {
-      id: "e1",
-      title: "Toilet Paper",
-      amount: 94.12,
-      date: new Date(2020, 7, 14),
-    },
-    { id: "e2", title: "New TV", amount: 799.49, date: new Date(2021, 2, 12) },
-    {
-      id: "e3",
-      title: "Car Insurance",
-      amount: 294.67,
-      date: new Date(2021, 2, 28),
-    },
-    {
-      id: "e4",
-      title: "New Desk (Wooden)",
-      amount: 450,
-      date: new Date(2021, 5, 12),
-    },
-  ];
+  const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
+  //const [yearFilter, setYearFilter] = useState(2022);
 
   const addExpenseHandler = (expense) => {
-    console.log("In App.js");
-    console.log(expense);
+    // make sure we have the freshed expenses array
+    setExpenses((prevExpenses) => {
+      return [expense, ...expenses];
+    });
+    console.log("Adding ... " + expense);
   };
+
+  const onYearChange = () => {};
 
   return (
     <div>
-      // pass function to child in props - for callback
       <NewExpense onAddExpense={addExpenseHandler}></NewExpense>
       {console.log(expenses)}
       <Expenses items={expenses}></Expenses>
